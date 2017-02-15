@@ -1,2 +1,3 @@
 node_modules/*
 build/html/*.html
+build/xml/*.xml

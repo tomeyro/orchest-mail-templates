@@ -1,0 +1,20 @@
+<p class="or-alert-success or-text-big">The instance passed production!</p>
+<p class="or-menu">
+  % if ctx.deploy_url:
+  <a href="${ctx.deploy_url}">Verify the deploy</a>
+  % endif
+  % if ctx.history_url:
+  <a href="${ctx.history_url}">Build history</a>
+  % endif
+</p>
+<div class="or-separator"></div>
+% if ctx.deploy_url:
+<p class="or-text or-text-small or-color-muted">
+  Deploy URL: ${ctx.deploy_url}
+</p>
+% endif
+% if ctx.history_url:
+<p class="or-text or-text-small or-color-muted">
+  Build history URL: ${ctx.history_url}
+</p>
+% endif

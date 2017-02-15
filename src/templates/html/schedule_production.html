@@ -1,0 +1,67 @@
+<p class="or-alert-warning or-text-big">An instance has been flagged to be deployed into production.</p>
+% if ctx.error:
+<p class="or-alert-error">
+  But there was an error trying to push the image ${ctx.image}.
+</p>
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <b>Error:</b>
+      </td>
+      <td>
+        ${ctx.error}
+      </td>
+    </tr>
+  </tbody>
+</table>
+% endif
+% if not ctx.error:
+<table class="or-table">
+  <tbody>
+    <tr>
+      <td>
+        <b>Image:</b>
+      </td>
+      <td>
+        ${ctx.image}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <b>Requested by:</b>
+      </td>
+      <td>
+        ${ctx.user}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <b>Customer:</b>
+      </td>
+      <td>
+        ${ctx.customer_id}
+      </td>
+    </tr>
+  </tbody>
+</table>
+% endif
+<p class="or-menu">
+  % if ctx.deploy_url:
+  <a href="${ctx.deploy_url}">Verify the deploy</a>
+  % endif
+  % if ctx.history_url:
+  <a href="${ctx.history_url}">Build history</a>
+  % endif
+</p>
+<div class="or-separator"></div>
+% if ctx.deploy_url:
+<p class="or-text or-text-small or-color-muted">
+  Deploy URL: ${ctx.deploy_url}
+</p>
+% endif
+% if ctx.history_url:
+<p class="or-text or-text-small or-color-muted">
+  Build history URL: ${ctx.history_url}
+</p>
+% endif

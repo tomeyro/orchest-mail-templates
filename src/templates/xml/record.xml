@@ -1,0 +1,10 @@
+  <record id="email_template_{{id}}" model="mail.template">
+    <field name="name">{{name}}</field>
+    <field name="subject"/>
+    <field name="email_from"/>
+    <field name="email_to"/>
+    <field name="model_id" ref="model_deploy_deploy"/>
+    <field name="body_html"><![CDATA[
+{{html}}
+    ]]></field>
+  </record>

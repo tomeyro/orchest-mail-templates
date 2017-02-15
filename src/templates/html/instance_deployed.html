@@ -1,0 +1,106 @@
+<p class="or-alert-success or-text-big">Your instance has been deployed!</p>
+<p class="or-menu">
+  % if ctx.direct_url:
+  <a href="${ctx.direct_url}">Access instance</a>
+  % endif
+  % if ctx.nginx_url:
+  <a href="${ctx.nginx_url}">Access Nginx</a>
+  % endif
+</p>
+% if ctx.admin and ctx.adm_pass:
+<table class="or-table">
+  <tbody>
+    <tr>
+      <td>
+        <b>Admin password:</b>
+      </td>
+      <td>
+        ${ctx.admin}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <b>Super admin password:</b>
+      </td>
+      <td>
+        ${ctx.adm_pass}
+      </td>
+    </tr>
+  </tbody>
+</table>
+% endif
+% if ctx.db_name:
+<table class="or-table">
+  <tbody>
+    <tr>
+      <td>
+        <b>Database name:</b>
+      </td>
+      <td>
+        ${ctx.db_name}
+      </td>
+    </tr>
+  </tbody>
+</table>
+% endif
+<p class="or-menu">
+  % if ctx.deploy_url:
+  <a href="${ctx.deploy_url}">Verify the deploy</a>
+  % endif
+  % if ctx.history_url:
+  <a href="${ctx.history_url}">Build history</a>
+  % endif
+</p>
+% if ctx.ssh_access:
+<div class="or-separator"></div>
+<p class="or-text or-text-big">
+  <b>SSH Access:</b>
+</p>
+<ul class="or-list">
+    <li>ssh -p ${ctx.ssh_access.get('port')} odoo@${ctx.ssh_access.get('domain')} </li>
+    <li>ssh -p ${ctx.ssh_access.get('port')} root@${ctx.ssh_access.get('domain')} </li>
+</ul>
+<p class="or-text">
+  To verify the odoo logs see: <i>/var/log/supervisor/odoo_stdout.log</i>
+</p>
+<p class="or-text">
+  To verify the postgres logs see:
+</p>
+<ul class="or-list">
+  <li><i>/var/log/supervisor/postgres_stdout.log</i></li>
+  <li><i>/var/log/supervisor/postgres_stderr.log</i></li>
+</ul>
+<p class="or-text">To manage the instance of odoo use the command supervisorctl:</p>
+<ul class="or-list">
+  <li>supervisorctl start odoo</li>
+  <li>supervisorctl stop odoo</li>
+  <li>supervisorctl status odoo</li>
+  <li>supervisorctl restart odoo</li>
+</ul>
+<div class="or-separator"></div>
+<p class="or-text or-text-big">
+  <b>Warning!</b>
+</p>
+<p class="or-text">You must <b>not</b> stop the supervisor process!</p>
+% endif
+<div class="or-separator"></div>
+% if ctx.direct_url:
+<p class="or-text or-text-small or-color-muted">
+  Direct URL: ${ctx.direct_url}
+</p>
+% endif
+% if ctx.nginx_url:
+<p class="or-text or-text-small or-color-muted">
+  Nginx URL: ${ctx.nginx_url}
+</p>
+% endif
+% if ctx.deploy_url:
+<p class="or-text or-text-small or-color-muted">
+  Deploy URL: ${ctx.deploy_url}
+</p>
+% endif
+% if ctx.history_url:
+<p class="or-text or-text-small or-color-muted">
+  Build history URL: ${ctx.history_url}
+</p>
+% endif

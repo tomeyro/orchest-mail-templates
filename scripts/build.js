@@ -19,25 +19,55 @@ function buildCss() {
 function buildHtml(css) {
   let juice = require('juice');
 
-  fs.readdir('src/templates', function(err, files) {
+  fs.readdir('src/templates/html', function(err, files) {
     if (err) throw err;
 
-    fs.readFile('src/templates/base.html', function(err, base) {
+    fs.readFile('src/templates/html/base.html', function(err, base_template) {
       if (err) throw err;
 
+      records = [];
       files.forEach(function(fileName) {
         if (fileName != 'base.html') {
-          fs.readFile('src/templates/' + fileName, function(err, template) {
+          fs.readFile('src/templates/html/' + fileName, function(err, template) {
             if (err) throw err;
 
-            html = juice('<style>' + css + '</style>' + base.toString().replace('{{body}}', template.toString().trim()));
+            html = juice('<style>' + css + '</style>' + base_template.toString().replace('{{body}}', template.toString().trim()));
             fs.writeFile(
                 'build/html/' + fileName, html,
                 function(err) { if (err) throw err; }
             );
+            if (fileName != 'example.html') {
+              records.push({'name': fileName.replace(".html", ""), 'html': html});
+            }
           });
         }
       });
+
+      buildXml(records);
+    });
+  });
+}
+
+function buildXml(records) {
+  fs.readFile('src/templates/xml/base.xml', function(err, base_template) {
+    if (err) throw err;
+
+    fs.readFile('src/templates/xml/record.xml', function(err, record_template) {
+      if (err) throw err;
+
+      rendered_records = [];
+      records.forEach(function(record) {
+        rendered_record = record_template.toString()
+          .replace("{{id}}", record.name)
+          .replace("{{name}}", record.name.charAt(0).toUpperCase() + record.name.substr(1).replace(/_/g, " "))
+          .replace("{{html}}", record.html.trim());
+        rendered_records.push(rendered_record);
+      });
+      xml = base_template.toString().replace("{{records}}", "  " + rendered_records.join("").trim());
+      fs.writeFile(
+          'build/xml/mail_templates.xml', xml,
+          function(err) { if (err) throw err; }
+      );
     });
   });
 }
