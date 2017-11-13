@@ -1,32 +1,17 @@
+<!--{
+  "field_values": {
+    "subject": "Error creating ${object.instance_type.title()} ${object.customer_id.title()} container"
+  }
+}-->
 <p class="or-alert-error or-text-big">Your instance couldn't be deployed!</p>
-<table class="or-table">
-  <tbody>
-    <tr>
-      <td>
-        <b>Errors:</b>
-      </td>
-      <td>
-        ${ctx.error}
-      </td>
-    </tr>
-  </tbody>
-</table>
-<p class="or-menu">
-  % if ctx.deploy_url:
-  <a href="${ctx.deploy_url}">Verify the deploy</a>
-  % endif
-  % if ctx.history_url:
-  <a href="${ctx.history_url}">Build history</a>
-  % endif
-</p>
+<div class="or-table">
+  <p><b>Errors:</b> ${ctx.error}</p>
+</div>
+<p class="or-text"><b>Your instance information:</b></p>
+<div class="or-table">
+{{instance_info}}
+</div>
+{{summary_logs}}
+{{deploy_menu}}
 <div class="or-separator"></div>
-% if ctx.deploy_url:
-<p class="or-text or-text-small or-color-muted">
-  Deploy URL: ${ctx.deploy_url}
-</p>
-% endif
-% if ctx.history_url:
-<p class="or-text or-text-small or-color-muted">
-  Build history URL: ${ctx.history_url}
-</p>
-% endif
+{{deploy_links}}

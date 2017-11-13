@@ -1,0 +1,32 @@
+<!--{
+  "field_refs": {
+    "model_id": "model_maintenance_equipment"
+  },
+  "field_values": {
+    "subject": "The Worker ${object.worker_id} is not responding"
+  },
+  "field_evals": {
+    "auto_delete": "True"
+  }
+}-->
+<p class="or-alert-error or-text-big">The worker ${object.worker_id} is not responding</p>
+<p class="or-text">
+  <b>This means that probably the server is down,
+     the worker has stopped, or the messages can't reach it.</b>
+</p>
+<div class="or-table">
+  <div class="or-separator"></div>
+  <p><b>Server:</b> ${object.name}</p>
+  <div class="or-separator"></div>
+  <p><b>Last message sent:</b> ${object.date_sent}</p>
+  <div class="or-separator"></div>
+% if object.last_received:
+  <p><b>Last reply received:</b> ${object.last_received}</p>
+  <div class="or-separator"></div>
+% endif
+</div>
+<div class="or-menu">
+  <a href="${object.get_server_form_url()}">Server configuration</a>
+</div>
+<div class="or-separator"></div>
+<p class="or-text or-text-small or-color-muted">Server configuration: ${object.get_server_form_url()}</p>

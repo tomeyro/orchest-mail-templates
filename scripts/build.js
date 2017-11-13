@@ -25,19 +25,35 @@ function buildHtml(css) {
     fs.readFile('src/templates/html/base.html', function(err, base_template) {
       if (err) throw err;
 
+      blocks = {};
+      blocks_files = fs.readdirSync('src/templates/html/blocks');
+      blocks_files.forEach(function(block_file) {
+        blocks[block_file.replace('.html', '')] = fs.readFileSync('src/templates/html/blocks/' + block_file);
+      });
+
       records = [];
       files.forEach(function(fileName) {
-        if (fileName != 'base.html') {
+        if (!['base.html', 'blocks'].includes(fileName)) {
           fs.readFile('src/templates/html/' + fileName, function(err, template) {
             if (err) throw err;
 
-            html = juice('<style>' + css + '</style>' + base_template.toString().replace('{{body}}', template.toString().trim()));
+            options = {};
+            html = base_template.toString().replace('{{body}}', template.toString().trim());
+            for (block in blocks) {
+              html = html.replace('{{' + block + '}}', blocks[block]);
+            }
+            html = juice('<style>' + css + '</style>' + html);
+            if (match = html.match(/<!--{[^]+}-->/)) {
+              html = html.replace(match[0], '');
+              options = JSON.parse(match[0].replace('<!--', '').replace('-->', ''));
+            }
+            html = html.replace(/\n{2,}/g, '\n');
             fs.writeFile(
                 'build/html/' + fileName, html,
                 function(err) { if (err) throw err; }
             );
             if (fileName != 'example.html') {
-              records.push({'name': fileName.replace(".html", ""), 'html': html});
+              records.push({'name': fileName.replace(".html", ""), 'html': html, 'options': options});
             }
           });
         }
@@ -56,14 +72,42 @@ function buildXml(records) {
       if (err) throw err;
 
       rendered_records = [];
-      records.forEach(function(record) {
+      records.sort(function(prev, next) {
+        return next.name < prev.name ? 1 : (next.name > prev.name ? -1 : 0);
+      }).forEach(function(record) {
         rendered_record = record_template.toString()
           .replace("{{id}}", record.name)
           .replace("{{name}}", record.name.charAt(0).toUpperCase() + record.name.substr(1).replace(/_/g, " "))
           .replace("{{html}}", record.html.trim());
+        for (field in (record.options.field_values || {})) {
+          rendered_record = rendered_record.replace(
+            new RegExp('<field name="' + field + '"([^<]*\/>|[^]*<\/field>)', 'g'),
+            '<field name="' + field + '">' + (record.options.field_values || {})[field] + '</field>'
+          );
+        }
+        for (field in (record.options.field_refs || {})) {
+          rendered_record = rendered_record.replace(
+            new RegExp('<field name="' + field + '"([^<]*\/>|[^]*<\/field>)', 'g'),
+            '<field name="' + field + '" ref="' + (record.options.field_refs || {})[field] + '"/>'
+          );
+        }
+        for (field in (record.options.field_evals || {})) {
+          rendered_record = rendered_record.replace(
+            new RegExp('<field name="' + field + '"([^<]*\/>|[^]*<\/field>)', 'g'),
+            '<field name="' + field + '" eval="' + (record.options.field_evals || {})[field] + '"/>'
+          );
+        }
+        (record.options.exclude_fields || []).forEach(function(field) {
+          rendered_record = rendered_record.replace(new RegExp('<field name="' + field + '"([^<]*\/>|[^]*<\/field>)', 'g'), '');
+        });
         rendered_records.push(rendered_record);
       });
-      xml = base_template.toString().replace("{{records}}", "  " + rendered_records.join("").trim());
+      xml = '';
+      base_template.toString().replace("{{records}}", "  " + rendered_records.join("").trim()).split('\n').forEach(function(line) {
+        if (line.trim()) {
+          xml += line + '\n';
+        }
+      });
       fs.writeFile(
           'build/xml/mail_templates.xml', xml,
           function(err) { if (err) throw err; }
@@ -73,41 +117,3 @@ function buildXml(records) {
 }
 
 buildCss();
-/**
-fs.readFile('data/vauxoo.json', function(err, json) {
-  if (err) throw err;
-
-  data = JSON.parse(json.toString());
-
-  for (dir in data['pages']) {
-    fs.mkdir(dir, function(err) {
-      if (err) {
-        if (err.code != 'EEXIST') throw err;
-      }
-    });
-    for (page in data['pages'][dir]) {
-      fs.writeFile(
-          dir + '/' + page + '.html',
-          compiler(data['pages'][dir][page]),
-          function(err) { if (err) throw err; }
-      )
-    }
-  }
-});
-
-let less = require('less');
-
-fs.readFile('src/less/style.less', function(err, style) {
-  if (err) throw err;
-
-  less.render(style.toString(), {
-    compress: true
-  }, function(err, output) {
-    fs.writeFile(
-        'res/css/style.css',
-        output.css,
-        function(err) { if (err) throw err; }
-    );
-  });
-});
-**/

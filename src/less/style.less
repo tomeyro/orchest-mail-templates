@@ -1,7 +1,10 @@
 .or-email {
   font-family: sans-serif;
-  margin: 0;
+  font-size: 14px;
+  margin: 0 auto;
   padding: 10px;
+  min-width: 224px;
+  max-width: 600px;
 
   * {
     margin: 0;
@@ -17,68 +20,121 @@
     margin: 10px 0;
   }
 
+  .or-logo {
+    background-color: #036495;
+    border-radius: 5px 5px 0 0;
+    padding: 22px;
+    text-align: center;
+  }
+
   .or-content {
     padding: 10px;
-    background-color: #ECECEC;
+    padding-top: 0;
+    background-color: #FCFCFC;
     border-radius: 5px;
 
-    .or-title, .or-alert-success, .or-alert-error, .or-alert-warning, .or-menu, .or-list {
-      margin: 10px 0;
+    .or-title, .or-text, .or-list {
+      margin: 15px 0;
     }
 
-    .or-alert-success, .or-alert-error, .or-alert-warning {
-      padding: 2px;
-      border-radius: 5px;
-      color: black;
+    .or-title {
+      text-align: center;
+      font-weight: 600;
     }
-    .or-alert-success { background-color: #A8E766;  }
-    .or-alert-error { background-color: #F48390; }
-    .or-alert-warning { background-color: #FFDC87; }
+    .or-alert-success, .or-alert-error, .or-alert-warning {
+      margin: 17px 0;
+      text-align: center;
+      padding: 7px;
+      border-radius: 5px;
+      font-weight: 600;
+    }
+    .or-alert-success { background-color: #53B25B;  }
+    .or-alert-error { background-color: #D60024; }
+    .or-alert-warning { background-color: #F8A040; }
 
     .or-table {
-      tbody {
-        tr {
-          td {
-            padding: 5px;
+      margin: 15px 0;
+      padding: 0 10px;
 
-            &:first-child { padding-left: 0; }
-            &:last-child { padding-right: 0; }
-          }
+      p {
+        padding: 7px 5px;
+      }
+      .or-separator {
+        margin: 0;
+      }
+    }
+
+    table {
+      border: 0;
+      width: 100%;
+      
+      tr th, tr td {
+        padding: 5px 0;
+        border-bottom: 1px #CCCCCC solid;
+        text-align: center;
+
+        a {
+          color: #036495;
+          text-decoration: none;
         }
       }
     }
 
     .or-menu {
+      margin: 25px 0;
+
       a {
-        background-color: #A41D35;
-        border-radius: 5px;
-        padding: 5px;
+        background-color: #fb3640;
+        border-color: #fb1d28;
+        border-radius: 24px;
+        padding: 10px;
         color: white;
         margin-right: 5px;
+        line-height: 1.33;
+        text-decoration: none;
       }
     }
 
     .or-separator {
-      height: 2px;
-      background-color: #888888;
+      height: 1px;
+      background-color: #CCCCCC;
       margin: 20px 0 10px 0;
       border-radius: 5px;
-    }
-
-    .or-text {
-      margin-bottom: 5px;
     }
 
     .or-list {
       margin-left: 25px;
     }
+
+    .or-logs {
+      font-family: monospace;
+      padding: 10px;
+      background-color: #111;
+      color: #EEE;
+      border-radius: 5px;
+
+      .or-log-type {
+        margin-bottom: 10px;
+      }
+      .or-log-title-warning {
+        margin-bottom: 10px;
+        color: #F8A040;
+      }
+      .or-log-title-error {
+        margin-bottom: 10px;
+        color: #D60024;
+      }
+      .or-log-msg {
+        margin: 0;
+      }
+    }
   }
 
   .or-footer {
-    margin-top: 20px;
+    margin-top: 25px;
 
-    .or-logo {
-      text-align: right;
+    .or-logo-vx {
+      text-align: center;
 
       img {
         height: 25px;

@@ -1,40 +1,33 @@
+<!--{
+  "field_values": {
+    "subject": "Error update database ${object.instance_type.title()} instance ${object.customer_id.title()}"
+  }
+}-->
 <p class="or-alert-error or-text-big">Your instance couldn't be updated!</p>
+% if ctx.error.errors or ctx.error.critical_errors:
+<div class="or-logs">
 % if ctx.error.errors:
-<p class="or-text">
-  <b>Errors:</b>
-</p>
+  <div class="or-log-type">
+    <p class="or-log-title-error">Errors:</p>
 % for error in ctx.error.errors:
-<p class="or-text">
-  ${error}
-</p>
+    <p class="or-log-msg">${error}</p>
 % endfor
+  </div>
 % endif
 % if ctx.error.critical_errors:
-<p class="or-text">
-  <b>Critical errors:</b>
-</p>
-% for critical in ctx.error.critical_errors:
-<p class="or-text">
-  ${critical}
-</p>
+  <div class="or-log-type">
+    <p class="or-log-title-error">Critical errors:</p>
+% for error in ctx.error.critical_errors:
+    <p class="or-log-msg">${error}</p>
 % endfor
+  </div>
 % endif
-<p class="or-menu">
-  % if ctx.deploy_url:
-  <a href="${ctx.deploy_url}">Verify the deploy</a>
-  % endif
-  % if ctx.history_url:
-  <a href="${ctx.history_url}">Build history</a>
-  % endif
-</p>
+</div>
+% endif
+<p class="or-text"><b>Your instance information:</b></p>
+<div class="or-table">
+{{instance_info}}
+</div>
+{{deploy_menu}}
 <div class="or-separator"></div>
-% if ctx.deploy_url:
-<p class="or-text or-text-small or-color-muted">
-  Deploy URL: ${ctx.deploy_url}
-</p>
-% endif
-% if ctx.history_url:
-<p class="or-text or-text-small or-color-muted">
-  Build history URL: ${ctx.history_url}
-</p>
-% endif
+{{deploy_links}}

@@ -1,0 +1,27 @@
+% if ctx.ssh_access and ctx.ssh_access.port and ctx.ssh_access.domain:
+<div class="or-separator"></div>
+<p class="or-text"><b>SSH Access:</b></p>
+<ul class="or-list">
+    <li>ssh -p ${ctx.ssh_access.port} odoo@${ctx.ssh_access.domain} </li>
+    <li>ssh -p ${ctx.ssh_access.port} root@${ctx.ssh_access.domain} </li>
+</ul>
+<p class="or-text">To verify the odoo logs see:</p>
+<ul class="or-list">
+  <li><i>/var/log/supervisor/odoo_stdout.log</i></li>
+</ul>
+<p class="or-text">To verify the postgres logs see:</p>
+<ul class="or-list">
+  <li><i>/var/log/supervisor/postgres_stdout.log</i></li>
+  <li><i>/var/log/supervisor/postgres_stderr.log</i></li>
+</ul>
+<p class="or-text">To manage the instance of odoo use <i>supervisorctl</i>:</p>
+<ul class="or-list">
+  <li>supervisorctl start odoo</li>
+  <li>supervisorctl stop odoo</li>
+  <li>supervisorctl status odoo</li>
+  <li>supervisorctl restart odoo</li>
+</ul>
+<div class="or-separator"></div>
+<p class="or-text"><b>Warning!</b></p>
+<p class="or-text">You must <b>not</b> stop the supervisor process!</p>
+% endif

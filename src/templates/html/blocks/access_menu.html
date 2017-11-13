@@ -1,0 +1,8 @@
+<p class="or-menu">
+  % if object.direct_url and object.direct_url != 'N/A':
+  <a href="${object.direct_url}">Access instance</a>
+  % endif
+  % if object.nginx_url and object.nginx_url != 'N/A':
+  <a href="${object.nginx_url}">Access Nginx</a>
+  % endif
+</p>

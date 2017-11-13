@@ -1,9 +1,22 @@
 {
   "name": "error_pages",
+  "watch": {
+    "build": {
+      "patterns": [
+        "src/templates",
+        "src/less",
+        "scripts"
+      ],
+      "extensions": "html,less,xml,js",
+      "quiet": false
+    }
+  },
   "scripts": {
+    "watch_build": "npm-watch build",
     "build": "node scripts/build.js"
   },
   "devDependencies": {
+    "npm-watch": "^0.3.0",
     "less": "^2.7.2",
     "juice": "^4.0.2"
   }

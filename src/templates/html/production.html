@@ -1,20 +1,42 @@
-<p class="or-alert-success or-text-big">The instance passed production!</p>
-<p class="or-menu">
-  % if ctx.deploy_url:
-  <a href="${ctx.deploy_url}">Verify the deploy</a>
-  % endif
-  % if ctx.history_url:
-  <a href="${ctx.history_url}">Build history</a>
-  % endif
-</p>
+<!--{
+  "field_values": {
+    "subject": "Production instance ${object.customer_id.title()} deployed"
+  }
+}-->
+<p class="or-alert-success or-text-big">This updates were applied into production!</p>
+% if ctx.production_branch:
+<div class="or-table">
+  <p><b>By:</b> ${ctx.production_branch.user_production_done_by.title()}</p>
+  <p><b>On:</b> ${ctx.production_branch.write_date}</p>
+</div>
+% endif
+<p class="or-text"><b>Your instance information:</b></p>
+<div class="or-table">
+{{instance_info}}
+</div>
+% if ctx.production_branch:
+<table>
+  <thead>
+    <tr>
+      <th>Repository</th>
+      <th>URL</th>
+      <th>Branch</th>
+      <th>Commit</th>
+      <th>Path</th>
+  </thead>
+  <tbody>
+% for branch in ctx.production_branch.build_id.branches:
+  <tr>
+    <td>${branch.name}</td>
+    <td><a href="${branch.get_repo_url_link()}">${branch.repo_url}</a></td>
+    <td>${branch.branch}</td>
+    <td><a href="${branch.get_commit_url()}">${branch.sha[0:7]}</a></td>
+    <td>${branch.path}</td>
+  </tr>
+% endfor
+  </tbody>
+</table>
+% endif
+{{deploy_menu}}
 <div class="or-separator"></div>
-% if ctx.deploy_url:
-<p class="or-text or-text-small or-color-muted">
-  Deploy URL: ${ctx.deploy_url}
-</p>
-% endif
-% if ctx.history_url:
-<p class="or-text or-text-small or-color-muted">
-  Build history URL: ${ctx.history_url}
-</p>
-% endif
+{{deploy_links}}

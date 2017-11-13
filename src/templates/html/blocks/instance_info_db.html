@@ -1,0 +1,10 @@
+% if ctx.admin and ctx.adm_pass:
+  <p><b>Admin password:</b> ${ctx.admin}</p>
+  <div class="or-separator"></div>
+  <p><b>Super admin password:</b> ${ctx.adm_pass}</p>
+  <div class="or-separator"></div>
+% endif
+% if ctx.db_name:
+  <p><b>Database name:</b> ${ctx.db_name}</p>
+  <div class="or-separator"></div>
+% endif

@@ -1,0 +1,40 @@
+<!--{
+  "field_values": {
+    "subject": "Welcome to DeployV!"
+  },
+  "field_refs": {
+    "model_id": "crm.model_crm_lead"
+  },
+  "field_evals": {
+    "auto_delete": "True"
+  }
+}-->
+<p class="or-title or-text-big">
+  Your information has been submitted successfully!
+</p>
+<p class="or-text">
+  Hi! Thank you for your interest in DeployV.
+</p><p class="or-text">
+  We have received your question and you should expect a response soon.
+</p><p class="or-text">
+  For your records, here is a copy of the information you submitted to us:
+</p>
+<div class="or-table">
+  <div class="or-separator"></div>
+  <p><b>Name:</b> ${object.contact_name}</p>
+  <div class="or-separator"></div>
+  <p><b>Phone:</b> ${object.phone}</p>
+  <div class="or-separator"></div>
+  <p><b>Email:</b> ${object.email_from}</p>
+  <div class="or-separator"></div>
+  <p><b>Company:</b> ${object.partner_name}</p>
+  <div class="or-separator"></div>
+  <p><b>Subject:</b> ${object.name}</p>
+  <div class="or-separator"></div>
+  <p><b>Question:</b> ${object.description}</p>
+  <div class="or-separator"></div>
+</div>
+<p class="p-text">
+  - The DeployV team.
+</p>
+<div class="or-separator"></div>

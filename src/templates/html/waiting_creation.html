@@ -1,61 +1,13 @@
+<!--{
+  "field_values": {
+    "subject": "[${object.task_id.upper()}] Waiting instance ${object.instance_type.title()} ${object.customer_id.title()} creation"
+  }
+}-->
 <p class="or-title or-text-big">Waiting for the container to be created.</p>
-<p class="or-text">
-  <b>Your instance info:</b>
-</p>
-<table class="or-table">
-  <tbody>
-    <tr>
-      <td>
-        <b>Customer ID:</b>
-      </td>
-      <td>
-        ${object.customer_id}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <b>Task ID:</b>
-      </td>
-      <td>
-        ${object.task_id}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <b>Type:</b>
-      </td>
-      <td>
-        ${object.instance_type}
-      </td>
-    </tr>
-  </tbody>
-</table>
-<p class="or-menu">
-  % if ctx.deploy_url:
-  <a href="${ctx.deploy_url}">Verify the deploy</a>
-  % endif
-  % if ctx.history_url:
-  <a href="${ctx.history_url}">Build history</a>
-  % endif
-</p>
+<p class="or-text"><b>Your instance information:</b></p>
+<div class="or-table">
+{{instance_info}}
+</div>
+{{deploy_menu}}
 <div class="or-separator"></div>
-% if ctx.direct_url:
-<p class="or-text or-text-small or-color-muted">
-  Direct URL: ${ctx.direct_url}
-</p>
-% endif
-% if ctx.nginx_url:
-<p class="or-text or-text-small or-color-muted">
-  Nginx URL: ${ctx.nginx_url}
-</p>
-% endif
-% if ctx.deploy_url:
-<p class="or-text or-text-small or-color-muted">
-  Deploy URL: ${ctx.deploy_url}
-</p>
-% endif
-% if ctx.history_url:
-<p class="or-text or-text-small or-color-muted">
-  Build history URL: ${ctx.history_url}
-</p>
-% endif
+{{deploy_links}}

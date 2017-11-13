@@ -1,0 +1,19 @@
+% if ctx.logs:
+<p class="or-text"><b>Summary logs:</b></p>
+<div class="or-logs">
+% for key, logs in ctx.logs.items():
+% if logs:
+  <div class="or-log-type">
+% if key in ['warnings', 'warnings_trans']:
+    <p class="or-log-title-warning">${ctx.titles_logs.get(key, 'Logs')}:</p>
+% else:
+    <p class="or-log-title-error">${ctx.titles_logs.get(key, 'Logs')}:</p>
+% endif
+% for log in logs:
+    <p class="or-log-msg">${log}</p>
+% endfor
+  </div>
+% endif
+% endfor
+</div>
+% endif
