@@ -13,9 +13,14 @@
   Your information has been submitted successfully!
 </p>
 <p class="or-text">
-  Hi! Thank you for your interest in DeployV.
+  Hi! Thank you for your interest in DeployV. You are on our
+  wait list, and you should expect a response soon.
 </p><p class="or-text">
-  We have received your question and you should expect a response soon.
+  We're currently in a beta stage and, because we want to build the best
+  possible product, we'll let in people gradually. Therefore, when your turn
+  comes, you'll receive an invitation. Thank you for being patient!
+</p><p class="p-text">
+  - The DeployV team.
 </p><p class="or-text">
   For your records, here is a copy of the information you submitted to us:
 </p>
@@ -27,14 +32,14 @@
   <div class="or-separator"></div>
   <p><b>Email:</b> ${object.email_from}</p>
   <div class="or-separator"></div>
+% if object.partner_name and object.partner_name != 'N/A':
   <p><b>Company:</b> ${object.partner_name}</p>
   <div class="or-separator"></div>
+% endif
   <p><b>Subject:</b> ${object.name}</p>
   <div class="or-separator"></div>
+% if object.description != object.name:
   <p><b>Question:</b> ${object.description}</p>
   <div class="or-separator"></div>
+% endif
 </div>
-<p class="p-text">
-  - The DeployV team.
-</p>
-<div class="or-separator"></div>
